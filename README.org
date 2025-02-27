@@ -52,11 +52,11 @@ Install manually (download, =package-install-file=) or, e.g., via elpaca:
                   '(:name "diff"
                           :type string
                           :description "The changes to apply in unified diff format (with @@ hunks and +/- lines)"))
-      :category "emacs"
-      ;;
-      ;; ...plus whatever other tools you use.
-      ;;
-      )))))
+      :category "emacs")
+     ;;
+     ;; ...plus whatever other tools you use.
+     ;;
+     ))))
 #+end_src
 
 ** [[https://github.com/ahyatt/llm][llm]]
