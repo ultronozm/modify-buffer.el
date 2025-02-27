@@ -56,7 +56,7 @@ Install manually (download, =package-install-file=) or, e.g., via elpaca:
       ;;
       ;; ...plus whatever other tools you use.
       ;;
-      ))))
+      )))))
 #+end_src
 
 ** ai-org-chat
