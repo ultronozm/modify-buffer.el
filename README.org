@@ -61,8 +61,7 @@ Install manually (download, =package-install-file=) or, e.g., via elpaca:
 
 ** [[https://github.com/ahyatt/llm][llm]]
 
-See the documentation of =llm
-Like the above, but with =#'llm-make-tool= in place of =#'gptel-make-tool=
+See the documentation of =llm=.  Use something like the above, but with =#'llm-make-tool= in place of =#'gptel-make-tool=.
 
 ** [[https://github.com/ultronozm/ai-org-chat.el][ai-org-chat]]
 
