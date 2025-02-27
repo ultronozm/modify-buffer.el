@@ -61,7 +61,7 @@ Install manually (download, =package-install-file=) or, e.g., via elpaca:
 
 ** ai-org-chat
 
-(will be add later, after I get around to updating the public version of that package)
+(will add later, after I get around to updating the public version of that package)
 
 # #+begin_src elisp
 # (require 'modify-buffer)
