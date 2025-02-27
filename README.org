@@ -1,0 +1,104 @@
+#+title: modify-buffer.el - Apply diffs to Emacs buffers for LLM tools
+
+* Overview
+
+=modify-buffer= provides functions to apply unified diff format changes to Emacs buffers, designed specifically for Language Model tools integration.
+
+This is an experiment, and is not at the level of aider, cursor.
+
+*Features:*
+- Test suite
+- Multiple implementations
+- Flexible matching
+
+*Available implementations:*
+- =modify-buffer-apply-diff-basic=: Simple implementation
+- =modify-buffer-apply-diff-patch=: Uses external 'patch' command
+- =modify-buffer-apply-diff-improved=: More robust implementation with better whitespace handling, insensitivity to line numbers (recommended)
+
+You can control which is used via the customization option =modify-buffer-default-implementation=.
+
+I'll note that the patch-based solution doesn't work so well for me, because the line numbers/totals provided by LLM's are typically not so accurate.
+
+* Installation
+
+Install manually (download, =package-install-file=) or, e.g., via elpaca:
+
+#+begin_src elisp
+(use-package modify-buffer
+  :ensure (:host github :repo "ultronozm/modify-buffer.el"))
+#+end_src
+
+* Integration with LLM Packages
+
+** gptel
+
+#+begin_src elisp
+(with-eval-after-load 'gptel
+  (setq
+   gptel-tools
+   (mapcar
+    (lambda (spec) (apply #'gptel-make-tool spec))
+    (list
+     (list
+      :name "modify_buffer"
+      :function (lambda (buffer diff)
+                  (modify-buffer-log-call buffer diff)
+                  (modify-buffer-apply-diff buffer diff))
+      :description "Modify buffer contents using unified diff format.  Small, atomic changes preferred!"
+      :args (list '(:name "buffer"
+                          :type string
+                          :description "The name of the buffer to modify")
+                  '(:name "diff"
+                          :type string
+                          :description "The changes to apply in unified diff format (with @@ hunks and +/- lines)"))
+      :category "emacs"
+      ;;
+      ;; ...plus whatever other tools you use.
+      ;;
+      ))))
+#+end_src
+
+** ai-org-chat
+
+(will be add later, after I get around to updating the public version of that package)
+
+# #+begin_src elisp
+# (require 'modify-buffer)
+
+# (setq ai-org-chat-tools
+#       (mapcar
+#        (lambda (spec) (apply #llm-make-tool spec))
+#        (list
+#         (list
+#          :name "modify_buffer"
+#          :function (lambda (buffer diff)
+#                      (modify-buffer-log-call buffer diff)
+#                      (modify-buffer-apply-diff buffer diff))
+#          :description "Modify buffer contents using unified diff format.  Small, atomic changes preferred!"
+#          :args (list '(:name "buffer"
+#                              :type string
+#                              :description "The name of the buffer to modify")
+#                      '(:name "diff"
+#                              :type string
+#                              :description "The changes to apply in unified diff format (with @@ hunks and +/- lines)"))
+#          :category "emacs"
+#         ;;
+#         ;; ...plus whatever other tools you use.
+#         ;;
+#         )))
+# #+end_src
+
+* Testing
+
+Run the test suite against any implementation:
+
+#+begin_src elisp
+(require 'modify-buffer-test)
+(modify-buffer-test-with-implementation #'modify-buffer-apply-diff
+  (ert "modify-buffer-test-*"))
+#+end_src
+
+* Debugging
+
+=modify-buffer-debug-enabled= controls whether we log diff attempts in the buffer ~*modify-buffer-debug*~.
