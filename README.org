@@ -4,7 +4,7 @@
 
 =modify-buffer= provides functions to apply unified diff format changes to Emacs buffers, designed specifically for Language Model tools integration.
 
-This is an experiment, and is not at the level of aider, cursor.
+This is an experiment, and is not at the level of aider, cursor, etc.
 
 *Features:*
 - Test suite
@@ -31,7 +31,7 @@ Install manually (download, =package-install-file=) or, e.g., via elpaca:
 
 * Integration with LLM Packages
 
-** gptel
+** [[https://github.com/karthink/gptel][gptel]]
 
 #+begin_src elisp
 (with-eval-after-load 'gptel
@@ -59,7 +59,12 @@ Install manually (download, =package-install-file=) or, e.g., via elpaca:
       )))))
 #+end_src
 
-** ai-org-chat
+** [[https://github.com/ahyatt/llm][llm]]
+
+See the documentation of =llm
+Like the above, but with =#'llm-make-tool= in place of =#'gptel-make-tool=
+
+** [[https://github.com/ultronozm/ai-org-chat.el][ai-org-chat]]
 
 (will add later, after I get around to updating the public version of that package)
 
