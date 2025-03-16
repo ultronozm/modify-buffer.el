@@ -1,5 +1,9 @@
 #+title: modify-buffer.el - Apply diffs to Emacs buffers for LLM tools
 
+* Notice
+
+With Sonnet 3.7, it seems that simpler approaches to buffer modification work well.  One of these is included as the =EditBuffer= tool in https://github.com/ultronozm/codel.el.  For this reason, I don't currently plan to work further on the present repository.
+
 * Overview
 
 =modify-buffer= provides functions to apply unified diff format changes to Emacs buffers, designed specifically for Language Model tools integration.
