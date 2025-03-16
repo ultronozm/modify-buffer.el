@@ -65,33 +65,28 @@ See the documentation of =llm=.  Use something like the above, but with =#'llm-m
 
 ** [[https://github.com/ultronozm/ai-org-chat.el][ai-org-chat]]
 
-(will add later, after I get around to updating the public version of that package)
+#+begin_src elisp
+(require 'modify-buffer)
 
-# #+begin_src elisp
-# (require 'modify-buffer)
-
-# (setq ai-org-chat-tools
-#       (mapcar
-#        (lambda (spec) (apply #llm-make-tool spec))
-#        (list
-#         (list
-#          :name "modify_buffer"
-#          :function (lambda (buffer diff)
-#                      (modify-buffer-log-call buffer diff)
-#                      (modify-buffer-apply-diff buffer diff))
-#          :description "Modify buffer contents using unified diff format.  Small, atomic changes preferred!"
-#          :args (list '(:name "buffer"
-#                              :type string
-#                              :description "The name of the buffer to modify")
-#                      '(:name "diff"
-#                              :type string
-#                              :description "The changes to apply in unified diff format (with @@ hunks and +/- lines)"))
-#          :category "emacs"
-#         ;;
-#         ;; ...plus whatever other tools you use.
-#         ;;
-#         )))
-# #+end_src
+(mapcar
+ #'ai-org-chat-register-tool
+ (mapcar
+  (lambda (spec) (apply #llm-make-tool spec))
+  (list
+   (list
+    :name "modify_buffer"
+    :function (lambda (buffer diff)
+                (modify-buffer-log-call buffer diff)
+                (modify-buffer-apply-diff buffer diff))
+    :description "Modify buffer contents using unified diff format.  Small, atomic changes preferred!"
+    :args (list '(:name "buffer"
+                        :type string
+                        :description "The name of the buffer to modify")
+                '(:name "diff"
+                        :type string
+                        :description "The changes to apply in unified diff format (with @@ hunks and +/- lines)"))
+    :category "emacs"))))
+#+end_src
 
 * Testing
 
